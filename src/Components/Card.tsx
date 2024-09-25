@@ -7,7 +7,7 @@ export default function MediaCard() {
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-        Alleviate 
+        Bu alan Elif'e rezerve 
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             <ul>

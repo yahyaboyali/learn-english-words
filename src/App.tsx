@@ -8,7 +8,7 @@ function App() {
     <>
     <ResponsiveAppBar />
       <div >
-        {[...Array(5)].map((_, index) => (
+        {[...Array(2)].map((_, index) => (
           <div style={{ margin: 10 }}>
             <BasicCard key={index} />
 
