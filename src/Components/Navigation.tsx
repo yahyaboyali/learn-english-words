@@ -12,8 +12,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useNavigate } from 'react-router-dom';
 
-const pages = ['Flash Cards', 'Add New Words'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
@@ -34,7 +34,17 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const navigate = useNavigate();
 
+  const handleMainPageClick = () => {
+    navigate('/');
+  };
+  const handleFlasCardsPageClick = () => {
+    navigate('/flashCards');
+  };
+  const handleAddNewWordPageClick = () => {
+    navigate('/addFlashCard');
+  };
   return (
     <AppBar position="fixed">
       <Container maxWidth="xl">
@@ -44,7 +54,6 @@ function ResponsiveAppBar() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -53,6 +62,7 @@ function ResponsiveAppBar() {
               color: 'inherit',
               textDecoration: 'none',
             }}
+            onClick={handleMainPageClick}
           >
             Main Page
           </Typography>
@@ -84,11 +94,12 @@ function ResponsiveAppBar() {
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem>
+                <Typography sx={{ textAlign: 'center' }} onClick={handleFlasCardsPageClick}>Flash Cards</Typography>
+              </MenuItem>
+              <MenuItem>
+                <Typography sx={{ textAlign: 'center' }} onClick={handleAddNewWordPageClick}>Add New Word</Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -110,16 +121,13 @@ function ResponsiveAppBar() {
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page}
-              </Button>
-            ))}
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}
+          >
+            <Button sx={{ my: 2, color: 'white'}} onClick={handleFlasCardsPageClick}>My Flash Cards</Button>
+          </Box>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
+          >
+            <Button sx={{ my: 2, color: 'white'}} onClick={handleAddNewWordPageClick}>Add New Word</Button>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

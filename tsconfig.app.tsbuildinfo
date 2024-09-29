@@ -1,1 +1,1 @@
-{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/card.tsx","./src/components/navigation.tsx"],"version":"5.6.2"}
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/card.tsx","./src/components/dashboard.tsx","./src/components/navigation.tsx","./src/pages/addnewword.tsx","./src/pages/flashcards.tsx","./src/pages/mainpage.tsx","./src/service/flashcard.ts"],"version":"5.6.2"}
