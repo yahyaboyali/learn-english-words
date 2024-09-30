@@ -5,6 +5,7 @@ import axios from 'axios';
 export interface FlashCard {
     word: string;
     sentence: string;
+    translate: string;
 }
 
 class FlashCardService {

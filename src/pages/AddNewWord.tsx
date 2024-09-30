@@ -7,13 +7,15 @@ import FlashCardService, { FlashCard } from '../service/flashCard'; // Servisi i
 const AddFlashCard: React.FC = () => {
   const [word, setWord] = useState<string>('');
   const [sentence, setSentence] = useState<string>('');
+  const [translate, setTranslate] = useState<string>('');
+
   const [successMessage, setSuccessMessage] = useState<string>('');
   const navigate = useNavigate(); // Yönlendirme için kullan
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const flashCard: FlashCard = { word, sentence };
+    const flashCard: FlashCard = { word, sentence, translate };
 
     try {
       await FlashCardService.addFlashCard(flashCard); // Servis metodunu çağırıyoruz
@@ -49,6 +51,15 @@ const AddFlashCard: React.FC = () => {
           margin="normal"
           value={sentence}
           onChange={(e) => setSentence(e.target.value)}
+          required
+        />
+        <TextField
+          label="Translate"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={sentence}
+          onChange={(e) => setTranslate(e.target.value)}
           required
         />
         <Button variant="contained" color="success" type="submit">
