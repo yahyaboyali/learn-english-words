@@ -12,7 +12,7 @@ const AddFlashCard: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     const flashCard: FlashCard = { word, sentence };
 
     try {
@@ -30,11 +30,11 @@ const AddFlashCard: React.FC = () => {
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" component="h1" gutterBottom>
-        FlashCard Ekle
+        Add New Word
       </Typography>
       <form onSubmit={handleSubmit}>
         <TextField
-          label="Kelime"
+          label="Word"
           variant="outlined"
           fullWidth
           margin="normal"
@@ -43,7 +43,7 @@ const AddFlashCard: React.FC = () => {
           required
         />
         <TextField
-          label="Cümle"
+          label="Sentence"
           variant="outlined"
           fullWidth
           margin="normal"
@@ -51,8 +51,8 @@ const AddFlashCard: React.FC = () => {
           onChange={(e) => setSentence(e.target.value)}
           required
         />
-        <Button variant="contained" color="primary" type="submit">
-          Ekle
+        <Button variant="contained" color="success" type="submit">
+          Save
         </Button>
       </form>
       {successMessage && <Typography color="green">{successMessage}</Typography>}
