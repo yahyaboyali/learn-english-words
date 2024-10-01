@@ -3,23 +3,27 @@ import React, { useState } from 'react';
 import { Button, TextField, Typography, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import FlashCardService, { FlashCard } from '../service/flashCard'; // Servisi içe aktarıyoruz
+import { useSelector } from 'react-redux';
+import { selectUser } from '../features/selector';
+
 
 const AddFlashCard: React.FC = () => {
   const [word, setWord] = useState<string>('');
   const [sentence, setSentence] = useState<string>('');
   const [translate, setTranslate] = useState<string>('');
+  const user = useSelector(selectUser); // Kullanıcı bilgilerini al
 
   const [successMessage, setSuccessMessage] = useState<string>('');
   const navigate = useNavigate(); // Yönlendirme için kullan
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const flashCard: FlashCard = { word, sentence, translate };
+    const userNumber = user?.id ?? -1
+    const flashCard: FlashCard = { word, sentence, translate, userNumber };
 
     try {
-      await FlashCardService.addFlashCard(flashCard); // Servis metodunu çağırıyoruz
-      setSuccessMessage('FlashCard başarıyla eklendi!');
+      const response = await FlashCardService.addFlashCard(flashCard); // Servis metodunu çağırıyoruz
+      setSuccessMessage(response ?? 'success');
       // Başarılı ekleme sonrası yönlendirme
       setTimeout(() => {
         navigate('/'); // Ana sayfaya yönlendir
@@ -58,7 +62,7 @@ const AddFlashCard: React.FC = () => {
           variant="outlined"
           fullWidth
           margin="normal"
-          value={sentence}
+          value={translate}
           onChange={(e) => setTranslate(e.target.value)}
           required
         />

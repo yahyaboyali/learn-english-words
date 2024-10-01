@@ -10,10 +10,13 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
+import { clearUser } from '../features/userSlice';
+import { useDispatch } from 'react-redux';
 
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const dispatch = useDispatch();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -28,11 +31,14 @@ function ResponsiveAppBar() {
   const navigate = useNavigate();
 
   const handleMainPageClick = () => {
+    dispatch(clearUser());
     navigate('/');
   };
+  /* bu kısım hatalı şimdilik comment
   const handleFlasCardsPageClick = () => {
     navigate('/flashCards');
   };
+  */
   const handleAddNewWordPageClick = () => {
     navigate('/addFlashCard');
   };
@@ -84,7 +90,7 @@ function ResponsiveAppBar() {
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               <MenuItem>
-                <Typography sx={{ textAlign: 'center' }} onClick={handleFlasCardsPageClick}>Flash Cards</Typography>
+                <Typography sx={{ textAlign: 'center' }} onClick={handleMainPageClick}>Flash Cards</Typography>
               </MenuItem>
               <MenuItem>
                 <Typography sx={{ textAlign: 'center' }} onClick={handleAddNewWordPageClick}>Add New Word</Typography>
@@ -103,12 +109,13 @@ function ResponsiveAppBar() {
               color: 'inherit',
               textDecoration: 'none',
             }}
+            onClick={handleMainPageClick}
           >
             Main Page
           </Typography>
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}
           >
-            <Button sx={{ my: 2, color: 'white' }} onClick={handleFlasCardsPageClick}>My Flash Cards</Button>
+            <Button sx={{ my: 2, color: 'white' }} onClick={handleMainPageClick}>My Flash Cards</Button>
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
           >

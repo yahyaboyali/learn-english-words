@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
-import FlashCardService from '../service/flashCard'
 import BasicCard from '../Components/Card'
 import { Container, Grid2, Pagination } from '@mui/material'
-
+import { useLocation } from 'react-router-dom'
 type Word = {
   id: number
   word: string
@@ -10,16 +9,16 @@ type Word = {
   translate: string
 }
 function FlashCards() {
-
+  const location = useLocation();
+  const userCards = location.state?.userCards; // Yönlendirmeden gelen kullanıcı bilgileri
+  console.log(userCards)
   const [words, setWords] = useState<Word[]>([])
   const [currentStep, setCurrentStep] = useState(1);
   const stepsPerPage = 1;
 
   useEffect(() => {
-    FlashCardService.getAll().then
-      (result =>
-        setWords(result.data))
-  }, [])
+    setWords(userCards)
+  }, [userCards])
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentStep(value);
     console.log(event)
