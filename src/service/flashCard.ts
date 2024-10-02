@@ -17,7 +17,7 @@ class FlashCardService {
     // FlashCard eklemek için metot
     public async addFlashCard(flashCard: FlashCard): Promise<string> {
         try {
-            const response = await axios.post(this.API_URL_LOCAL + 'add', flashCard);
+            const response = await axios.post(this.API_URL + 'add', flashCard);
             return response.data.message; // İsteğe bağlı olarak yanıtı dönebilirsiniz
         } catch (error) {
             throw new Error('FlashCard eklenirken bir hata oluştu: ' + error);
