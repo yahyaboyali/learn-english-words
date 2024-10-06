@@ -1,13 +1,8 @@
 
 // FlashCardService.ts
 import axios from 'axios';
+import { FlashCardDto } from './types';
 
-export interface FlashCard {
-    word: string;
-    sentence: string;
-    translate: string;
-    userNumber: number
-}
 
 class FlashCardService {
     API_URL = 'http://ec2-13-61-33-46.eu-north-1.compute.amazonaws.com/api/words/';
@@ -15,7 +10,7 @@ class FlashCardService {
 
 
     // FlashCard eklemek için metot
-    public async addFlashCard(flashCard: FlashCard): Promise<string> {
+    public async addFlashCard(flashCard: FlashCardDto): Promise<string> {
         try {
             const response = await axios.post(this.API_URL + 'add', flashCard);
             return response.data.message; // İsteğe bağlı olarak yanıtı dönebilirsiniz

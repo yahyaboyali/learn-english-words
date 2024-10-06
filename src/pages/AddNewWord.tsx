@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 import { Button, TextField, Typography, Container, Grid2 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import FlashCardService, { FlashCard } from '../service/flashCard'; // Servisi içe aktarıyoruz
+import FlashCardService from '../service/flashCard'; // Servisi içe aktarıyoruz
 import { useSelector } from 'react-redux';
 import { selectUser } from '../features/selector';
+import { FlashCardDto } from '../service/types';
 
 
 const AddFlashCard: React.FC = () => {
@@ -19,7 +20,7 @@ const AddFlashCard: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const userNumber = user?.id ?? -1
-    const flashCard: FlashCard = { word, sentence, translate, userNumber };
+    const flashCard: FlashCardDto = { word, sentence, translate, userNumber };
 
     try {
       const response = await FlashCardService.addFlashCard(flashCard); // Servis metodunu çağırıyoruz

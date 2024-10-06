@@ -1,27 +1,22 @@
 import { useEffect, useState } from 'react'
 import BasicCard from '../Components/Card'
 import { Button, Container, Grid2, Pagination } from '@mui/material'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { selectUser } from '../features/selector'
-type Word = {
-  id: number
-  word: string
-  sentence: string
-  translate: string
-}
+import { selectFlashCards, selectUser } from '../features/selector'
+import { FlashCardDto } from '../service/types'
+
 function FlashCards() {
   const navigate = useNavigate();
-  const location = useLocation();
   const user = useSelector(selectUser); // Kullanıcı bilgilerini al
-
-  const userCards = location.state?.userCards; // Yönlendirmeden gelen kullanıcı bilgileri
-  const [words, setWords] = useState<Word[]>([])
+  const flashCards = useSelector(selectFlashCards);
+  const userCards = flashCards; // Yönlendirmeden gelen kullanıcı bilgileri
+  const [words, setWords] = useState<FlashCardDto[]>([])
   const [currentStep, setCurrentStep] = useState(1);
   const stepsPerPage = 1;
 
   useEffect(() => {
-    setWords(userCards)
+    setWords(userCards ?? [])
   }, [userCards])
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentStep(value);

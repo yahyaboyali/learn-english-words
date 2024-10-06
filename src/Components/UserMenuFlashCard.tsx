@@ -6,10 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import FlashCardService from '../service/flashCard'
 import { useSelector } from 'react-redux';
 import { selectUser } from '../features/selector';
+import { useDispatch } from 'react-redux';
+import { setFlashCards } from '../features/flashCardSlice';
 
 export default function UserMenuFlashCard() {
     const user = useSelector(selectUser); // Kullanıcı bilgilerini al
-
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
 
@@ -22,11 +24,25 @@ export default function UserMenuFlashCard() {
 
         try {
             const response = await FlashCardService.getByUserId(userNumber);
-            navigate('/flashCards', { state: { userCards: response.data.data } })
+            dispatch(setFlashCards(response.data.data))
+            navigate('/flashCards')
 
         } catch (error) {
             console.error('Kullanıcı bilgileri alınırken hata oluştu:', error);
         }
+    }
+    const handlePlayHangman = async () => {
+        const userNumber = user?.id ?? -1
+
+        try {
+            const response = await FlashCardService.getByUserId(userNumber);
+            dispatch(setFlashCards(response.data.data))
+            navigate('/hangman')
+
+        } catch (error) {
+            console.error('Kullanıcı bilgileri alınırken hata oluştu:', error);
+        }
+
     }
     return (
         <Card sx={{ minWidth: 275 }}>
@@ -86,6 +102,30 @@ export default function UserMenuFlashCard() {
                     </AccordionDetails>
                     <AccordionActions>
                         <Button onClick={handleFlashCards}>get Flash Cards</Button>
+                    </AccordionActions>
+                </Accordion>
+                <Accordion style={{ marginTop: '7px' }}>
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel3-content"
+                        id="panel3-header"
+                    >
+                        Hangman
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        Hangman is a fun and interactive game that can help reinforce your vocabulary while making the learning process enjoyable. Here’s how to effectively use Hangman in conjunction with your flashcards:
+                        <ol>
+                            <li>
+                                <b>Select Vocabulary Words:</b>  Choose words from your flashcard collection that you want to practice. This ensures you are working with vocabulary that is relevant to your learning goals.
+                            </li>
+                            <li>
+                                <b>Play Regularly:</b>  Make Hangman a regular part of your study routine. This consistent practice will help solidify your vocabulary and make learning feel less like a chore and more like a game.
+                            </li>
+                        </ol>
+
+                    </AccordionDetails>
+                    <AccordionActions>
+                        <Button onClick={handlePlayHangman}>Play the Game</Button>
                     </AccordionActions>
                 </Accordion>
             </CardContent>

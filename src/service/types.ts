@@ -8,4 +8,11 @@ type User = {
     userName: string;
 }
 
-export type { FlashCardAddResponse, User };
+type FlashCardDto = {
+    word: string;
+    sentence: string;
+    translate: string;
+    userNumber: number
+}
+
+export type { FlashCardAddResponse, User, FlashCardDto };

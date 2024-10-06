@@ -5,6 +5,7 @@ import AddFlashCard from '../pages/AddNewWord'
 import ResponsiveAppBar from './Navigation'
 import NotePage from '../pages/NotePage'
 import UserPage from '../pages/UserPage'
+import Hangman from '../pages/Hangman'
 
 export default function Dashboard() {
     return (
@@ -16,6 +17,7 @@ export default function Dashboard() {
                 <Route path="/addFlashCard" element={<AddFlashCard />} />
                 <Route path='/notePad' element={<NotePage />} />
                 <Route path='/userPage' element={<UserPage />} />
+                <Route path='/hangman' element={<Hangman />} />
             </Routes>
         </div>
     )
