@@ -1,6 +1,11 @@
 type FlashCardAddResponse = {
-    message: string
-    success: boolean
+    message: string;
+    success: boolean;
 }
 
-export default FlashCardAddResponse
+type User = {
+    id: number;
+    userName: string;
+}
+
+export type { FlashCardAddResponse, User };

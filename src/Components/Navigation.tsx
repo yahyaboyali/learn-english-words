@@ -12,12 +12,17 @@ import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
 import { clearUser } from '../features/userSlice';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../features/selector';
+import { Alert, Snackbar } from '@mui/material';
 
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-  const dispatch = useDispatch();
+  const [open, setOpen] = React.useState(false);
 
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -34,14 +39,32 @@ function ResponsiveAppBar() {
     dispatch(clearUser());
     navigate('/');
   };
-  /* bu kısım hatalı şimdilik comment
-  const handleFlasCardsPageClick = () => {
-    navigate('/flashCards');
+
+  const handleAddFlashCardButton = () => {
+    if (user?.id === undefined || user.id === null) {
+      setOpen(true); // Snackbar'ı aç
+    } else {
+      navigate('/addFlashCard');
+    }
   };
-  */
-  const handleAddNewWordPageClick = () => {
-    navigate('/addFlashCard');
+
+  const handleSnackbarClose = (
+    event: React.SyntheticEvent<Element, Event> | Event,
+    reason: 'timeout' | 'clickaway' | 'escapeKeyDown'
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+    console.log(event)
   };
+
+  const handleAlertClose = (event: React.SyntheticEvent) => {
+    console.log(event)
+    setOpen(false);
+  };
+
+
   return (
     <AppBar position="fixed">
       <Container maxWidth="xl">
@@ -93,7 +116,7 @@ function ResponsiveAppBar() {
                 <Typography sx={{ textAlign: 'center' }} onClick={handleMainPageClick}>Flash Cards</Typography>
               </MenuItem>
               <MenuItem>
-                <Typography sx={{ textAlign: 'center' }} onClick={handleAddNewWordPageClick}>Add New Word</Typography>
+                <Typography sx={{ textAlign: 'center' }} onClick={handleAddFlashCardButton}>Add New Word</Typography>
               </MenuItem>
             </Menu>
           </Box>
@@ -119,11 +142,24 @@ function ResponsiveAppBar() {
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}
           >
-            <Button sx={{ my: 2, color: 'white' }} onClick={handleAddNewWordPageClick}>Add New Word</Button>
+            <Button sx={{ my: 2, color: 'white' }} onClick={handleAddFlashCardButton}>Add New Word</Button>
           </Box>
 
         </Toolbar>
       </Container>
+      <Snackbar
+        open={open}
+        autoHideDuration={3000} // 3 saniye sonra otomatik kapanır
+        onClose={handleSnackbarClose} // Snackbar onClose kullanımı
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }} // Ana konumu belirtin
+        sx={{
+          top: '10%',  // Yukarıdan 50px boşluk
+        }}
+      >
+        <Alert onClose={handleAlertClose} severity="warning" variant="filled">
+          Please Select a user!
+        </Alert>
+      </Snackbar>
     </AppBar>
   );
 }

@@ -1,6 +1,6 @@
 // AddFlashCard.tsx
 import React, { useState } from 'react';
-import { Button, TextField, Typography, Container } from '@mui/material';
+import { Button, TextField, Typography, Container, Grid2 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import FlashCardService, { FlashCard } from '../service/flashCard'; // Servisi içe aktarıyoruz
 import { useSelector } from 'react-redux';
@@ -32,7 +32,10 @@ const AddFlashCard: React.FC = () => {
       console.error('Hata:', error);
     }
   };
+  const handleBackToUserPage = () => {
+    navigate(`/userPage`, { state: { user: user } }); // Yönlendirme ve state ile veri gönderimi
 
+  }
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" component="h1" gutterBottom>
@@ -66,9 +69,17 @@ const AddFlashCard: React.FC = () => {
           onChange={(e) => setTranslate(e.target.value)}
           required
         />
-        <Button variant="contained" color="success" type="submit">
-          Save
-        </Button>
+        <Grid2 container>
+          <Grid2 size={6}>
+            <Button variant="contained" color="success" type="submit">
+              Save
+            </Button>
+          </Grid2>
+          <Grid2 size={6}>
+            <Button variant='contained' onClick={handleBackToUserPage}>geri dön </Button>
+          </Grid2>
+        </Grid2>
+
       </form>
       {successMessage && <Typography color="green">{successMessage}</Typography>}
     </Container>

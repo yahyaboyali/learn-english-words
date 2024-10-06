@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import BasicCard from '../Components/Card'
-import { Container, Grid2, Pagination } from '@mui/material'
-import { useLocation } from 'react-router-dom'
+import { Button, Container, Grid2, Pagination } from '@mui/material'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { selectUser } from '../features/selector'
 type Word = {
   id: number
   word: string
@@ -9,9 +11,11 @@ type Word = {
   translate: string
 }
 function FlashCards() {
+  const navigate = useNavigate();
   const location = useLocation();
+  const user = useSelector(selectUser); // Kullanıcı bilgilerini al
+
   const userCards = location.state?.userCards; // Yönlendirmeden gelen kullanıcı bilgileri
-  console.log(userCards)
   const [words, setWords] = useState<Word[]>([])
   const [currentStep, setCurrentStep] = useState(1);
   const stepsPerPage = 1;
@@ -25,6 +29,11 @@ function FlashCards() {
   };
   const startIndex = (currentStep - 1) * stepsPerPage;
   const selectedStep = words.slice(startIndex, startIndex + stepsPerPage);
+
+  const handleBackToUserPage = () => {
+    navigate(`/userPage`, { state: { user: user } }); // Yönlendirme ve state ile veri gönderimi
+
+  }
   return (
     <>
       <Container>
@@ -44,9 +53,12 @@ function FlashCards() {
             onChange={handlePageChange}
             color="primary"
             style={{ marginTop: '20px', display: 'inline-block' }}
+            variant="outlined"
           />
         </Grid2>
-
+        <Grid2 sx={{ marginTop: '10px' }}>
+          <Button variant='contained' onClick={handleBackToUserPage}>geri dön </Button>
+        </Grid2>
       </Container>
 
     </>

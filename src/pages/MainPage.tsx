@@ -2,14 +2,12 @@ import { Autocomplete, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import UserService from '../service/users'
-import FlashCardService from '../service/flashCard'
+//import FlashCardService from '../service/flashCard'
 import { useDispatch } from "react-redux";
 import { setUser } from "../features/userSlice";
+import { User } from "../service/types";
 
-interface User {
-    id: number;
-    userName: string;
-}
+
 export default function MainPage() {
     const navigate = useNavigate();
     const dispatch = useDispatch(); // dispatch'i tanımlıyoruz
@@ -26,10 +24,10 @@ export default function MainPage() {
         if (newValue) {
             try {
                 // Seçilen kullanıcıya ait bilgileri al
-                const response = await FlashCardService.getByUserId(newValue.id);
+                //const response = await FlashCardService.getByUserId(newValue.id);
                 dispatch(setUser(newValue));
                 // Kartlar sayfasına yönlendir
-                navigate(`/flashCards`, { state: { userCards: response.data.data } }); // Yönlendirme ve state ile veri gönderimi
+                navigate(`/userPage`, { state: { user: newValue } }); // Yönlendirme ve state ile veri gönderimi
             } catch (error) {
                 console.error('Kullanıcı bilgileri alınırken hata oluştu:', error);
             }
