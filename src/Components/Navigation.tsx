@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../features/selector';
 import { Alert, Snackbar } from '@mui/material';
 import { clearFlashCards } from '../features/flashCardSlice';
+import { clearTranslateStatus } from '../features/translate';
 
 
 function ResponsiveAppBar() {
@@ -39,6 +40,7 @@ function ResponsiveAppBar() {
   const handleMainPageClick = () => {
     dispatch(clearUser());
     dispatch(clearFlashCards());
+    dispatch(clearTranslateStatus());
     navigate('/');
   };
 

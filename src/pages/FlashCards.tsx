@@ -5,10 +5,13 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectFlashCards, selectUser } from '../features/selector'
 import { FlashCardDto } from '../service/types'
+import { useDispatch } from 'react-redux'
+import { clearTranslateStatus } from '../features/translate'
 
 function FlashCards() {
   const navigate = useNavigate();
   const user = useSelector(selectUser); // Kullanıcı bilgilerini al
+  const dispatch = useDispatch(); // dispatch'i tanımlıyoruz
   const flashCards = useSelector(selectFlashCards);
   const userCards = flashCards; // Yönlendirmeden gelen kullanıcı bilgileri
   const [words, setWords] = useState<FlashCardDto[]>([])
@@ -19,6 +22,7 @@ function FlashCards() {
     setWords(userCards ?? [])
   }, [userCards])
   const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    dispatch(clearTranslateStatus());
     setCurrentStep(value);
     console.log(event)
   };
