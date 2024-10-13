@@ -15,4 +15,11 @@ type FlashCardDto = {
     userNumber: number
 }
 
-export type { FlashCardAddResponse, User, FlashCardDto };
+type NoteDto = {
+    id?: number
+    title: string
+    content: string
+    userNumber: number
+}
+
+export type { FlashCardAddResponse, User, FlashCardDto, NoteDto };

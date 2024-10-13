@@ -2,15 +2,33 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Button, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../features/selector';
+import Note from '../service/Note';
+import { useDispatch } from 'react-redux';
+import { setNotes } from '../features/notes';
 
 
 export const UserMenuCard = () => {
+    const navigate = useNavigate(); // Yönlendirme için kullan
+    const user = useSelector(selectUser); // Kullanıcı bilgilerini al
+    const dispatch = useDispatch()
     const handleAddNote = () => {
+        navigate('/notePad')
+    };
+    const handleGetNotes = async () => {
+        const userNumber = user?.id ?? -1
+        try {
+            const response = await Note.getByUserId(userNumber)
+            dispatch(setNotes(response.data.data))
+            console.log(response.data.data)
+            navigate('/userNote')
+        } catch (error) {
+            console.error('Kullanıcı bilgileri alınırken hata oluştu:', error);
+        }
     };
 
-    const handleGetNotes = async () => {
-
-    }
     return (
         <Card sx={{ minWidth: 275 }}>
             <CardContent>

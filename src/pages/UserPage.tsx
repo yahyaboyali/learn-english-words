@@ -10,7 +10,6 @@ export default function UserPage() {
     //const user = useSelector(selectUser); // Kullanıcı bilgilerini al
     const location = useLocation();
     const user = location.state?.user;
-    // console.log(userCards)
     return (
         <>
             <Grid2 container spacing={2}>

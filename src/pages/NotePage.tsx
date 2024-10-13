@@ -2,25 +2,34 @@ import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { Container, TextField, Button, Typography, Paper, Grid2 } from '@mui/material';
+import Note from '../service/Note';
+import { NoteDto } from '../service/types';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../features/selector';
+import { useNavigate } from 'react-router-dom';
 
 
 const NotePage: React.FC = () => {
     const [title, setTitle] = useState<string>(''); // Başlık durumu
     const [content, setContent] = useState<string>(''); // İçerik durumu
-    const [notes, setNotes] = useState<{ title: string; content: string }[]>([]); // Kaydedilen notlar
-
+    const user = useSelector(selectUser); // Kullanıcı bilgilerini al
+    const [successMessage, setSuccessMessage] = useState<string>('');
+    const navigate = useNavigate(); // Yönlendirme için kullan
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
+        const userNumber = user?.id ?? -1
+        const note: NoteDto = { title, content, userNumber }
         if (!title || !content) {
             alert('Başlık ve içerik boş olamaz!');
             return;
         }
-
         try {
-            console.log(content)
-            console.log('Not kaydedildi:');
-            setNotes([...notes, { title, content }]); // Yeni notu duruma ekle
+            const response = await Note.saveNote(note)
+            setSuccessMessage(response ?? 'success');
+            // Başarılı ekleme sonrası yönlendirme
+            setTimeout(() => {
+                navigate('/'); // Ana sayfaya yönlendir
+            }, 2000);
             setTitle(''); // Başlığı sıfırla
             setContent(''); // İçeriği sıfırla
         } catch (error) {
@@ -85,6 +94,7 @@ const NotePage: React.FC = () => {
                     </Grid2>
                 </Grid2>
             </form>
+            {successMessage && <Typography color="green">{successMessage}</Typography>}
         </Container>
     )
 };

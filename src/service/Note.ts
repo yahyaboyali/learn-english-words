@@ -1,6 +1,7 @@
 
 // FlashCardService.ts
 import axios from 'axios';
+import { NoteDto } from './types';
 
 export interface Note {
     word: string;
@@ -28,6 +29,15 @@ class NoteService {
     }
     getByUserId(userId: number) {
         return axios.get(`${this.API_URL}getByUserNote/${userId}`);
+    }
+
+    public async saveNote(userNote: NoteDto): Promise<string> {
+        try {
+            const response = await axios.post(this.API_URL + 'add', userNote);
+            return response.data.message; // İsteğe bağlı olarak yanıtı dönebilirsiniz
+        } catch (error) {
+            throw new Error('Yeni not eklenirken bir hata oluştu: ' + error);
+        }
     }
 }
 

@@ -6,6 +6,8 @@ import ResponsiveAppBar from './Navigation'
 import NotePage from '../pages/NotePage'
 import UserPage from '../pages/UserPage'
 import Hangman from '../pages/Hangman'
+import UserNote from './UserNote'
+import EditNote from '../pages/EditNote'
 
 export default function Dashboard() {
     return (
@@ -18,6 +20,8 @@ export default function Dashboard() {
                 <Route path='/notePad' element={<NotePage />} />
                 <Route path='/userPage' element={<UserPage />} />
                 <Route path='/hangman' element={<Hangman />} />
+                <Route path='/userNote' element={<UserNote />} />
+                <Route path='/editNote' element={<EditNote />} />
             </Routes>
         </div>
     )
