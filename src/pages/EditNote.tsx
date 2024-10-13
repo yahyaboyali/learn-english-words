@@ -41,7 +41,7 @@ const EditNote: React.FC = () => {
             setSuccessMessage(response ?? 'Not başarıyla güncellendi!');
 
             setTimeout(() => {
-                navigate('/'); // Başarılı güncellemeden sonra yönlendirme
+                navigate('/userPage', { state: { user: user } }); // Başarılı güncellemeden sonra yönlendirme
             }, 2000);
         } catch (error) {
             console.error('Not güncellenirken bir hata oluştu:', error);

@@ -28,7 +28,7 @@ const NotePage: React.FC = () => {
             setSuccessMessage(response ?? 'success');
             // Başarılı ekleme sonrası yönlendirme
             setTimeout(() => {
-                navigate('/'); // Ana sayfaya yönlendir
+                navigate(`/userPage`, { state: { user: user } }); // Yönlendirme ve state ile veri gönderimi
             }, 2000);
             setTitle(''); // Başlığı sıfırla
             setContent(''); // İçeriği sıfırla
