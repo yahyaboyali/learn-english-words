@@ -13,7 +13,7 @@ export default function MainPage() {
     const dispatch = useDispatch(); // dispatch'i tanımlıyoruz
 
     const [users, setUsers] = useState<User[]>([]);
-
+    console.log(users)
     useEffect(() => {
         UserService.getAll().then(result =>
             setUsers(result.data.data)

@@ -11,7 +11,7 @@ export interface Note {
 }
 
 class NoteService {
-    API_URL = 'http://ec2-13-61-33-46.eu-north-1.compute.amazonaws.com/api/note/';
+    API_URL = 'http://ec2-16-171-253-65.eu-north-1.compute.amazonaws.com/api/note/';
     API_URL_LOCAL = 'http://localhost:8080/api/note/'
 
 
