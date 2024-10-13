@@ -36,7 +36,10 @@ const NotePage: React.FC = () => {
             console.error('Not kaydedilirken bir hata oluştu:', error);
         }
     };
+    const handleBackToUserPage = () => {
+        navigate(`/userPage`, { state: { user: user } }); // Yönlendirme ve state ile veri gönderimi
 
+    }
     return (
         <Container maxWidth="md" style={{ marginTop: '20px' }}>
             <form onSubmit={handleSubmit}>
@@ -95,6 +98,9 @@ const NotePage: React.FC = () => {
                 </Grid2>
             </form>
             {successMessage && <Typography color="green">{successMessage}</Typography>}
+            <Grid2 sx={{ marginTop: '10px' }}>
+                <Button variant='contained' onClick={handleBackToUserPage}>geri dön </Button>
+            </Grid2>
         </Container>
     )
 };

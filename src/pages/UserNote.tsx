@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Container, Grid2, Pagination } from '@mui/material';
+import { Button, Container, Grid2, Pagination } from '@mui/material';
 import { NoteDto } from '../service/types';
 import { useSelector } from 'react-redux';
-import { selectNotes } from '../features/selector';
-import Note from './Note';
+import { selectNotes, selectUser } from '../features/selector';
+import Note from '../Components/Note';
+import { useNavigate } from 'react-router-dom';
 
 export default function UserNote() {
+    const navigate = useNavigate();
+    const user = useSelector(selectUser); // Kullanıcı bilgilerini al
     const [notes, setNotes] = useState<NoteDto[]>([])
     const userNotes = useSelector(selectNotes)
     const [currentStep, setCurrentStep] = useState(1);
@@ -19,7 +22,10 @@ export default function UserNote() {
     };
     const startIndex = (currentStep - 1) * stepsPerPage;
     const selectedStep = notes.slice(startIndex, startIndex + stepsPerPage);
+    const handleBackToUserPage = () => {
+        navigate(`/userPage`, { state: { user: user } }); // Yönlendirme ve state ile veri gönderimi
 
+    }
     return (
         <>
             <Container>
@@ -41,6 +47,9 @@ export default function UserNote() {
                         style={{ marginTop: '20px', display: 'inline-block' }}
                         variant="outlined"
                     />
+                </Grid2>
+                <Grid2 sx={{ marginTop: '10px' }}>
+                    <Button variant='contained' onClick={handleBackToUserPage}>geri dön </Button>
                 </Grid2>
             </Container>
 

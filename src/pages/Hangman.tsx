@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { Button, Grid2, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { selectFlashCards } from '../features/selector'
+import { selectFlashCards, selectUser } from '../features/selector'
+import { useNavigate } from 'react-router-dom';
 
 //const WORDS = ['REACT', 'TYPESCRIPT', 'COMPONENT', 'STATE', 'PROPS'];
 
 function Hangman() {
-
+    const navigate = useNavigate();
+    const user = useSelector(selectUser); // Kullanıcı bilgilerini al
     const flashCards = useSelector(selectFlashCards);
     const upperCaseWords: string[] = flashCards ?
         flashCards.map((flashCard) => flashCard.word.toUpperCase()) :
@@ -55,6 +57,10 @@ function Hangman() {
         setGuessedLetters([]);
         setWrongGuesses(0);
     };
+    const handleBackToUserPage = () => {
+        navigate(`/userPage`, { state: { user: user } }); // Yönlendirme ve state ile veri gönderimi
+
+    }
     return (
         <Grid2 container direction="column" alignItems="center" spacing={2}>
             <Grid2>
@@ -85,6 +91,9 @@ function Hangman() {
                     </Button>
                 </Grid2>
             )}
+            <Grid2 sx={{ marginTop: '10px' }}>
+                <Button variant='contained' onClick={handleBackToUserPage}>geri dön </Button>
+            </Grid2>
         </Grid2>
     );
 };

@@ -6,7 +6,7 @@ import ResponsiveAppBar from './Navigation'
 import NotePage from '../pages/NotePage'
 import UserPage from '../pages/UserPage'
 import Hangman from '../pages/Hangman'
-import UserNote from './UserNote'
+import UserNote from '../pages/UserNote'
 import EditNote from '../pages/EditNote'
 
 export default function Dashboard() {

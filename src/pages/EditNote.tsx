@@ -3,19 +3,19 @@ import { Container, Typography, Paper, Button, TextField, Grid2 } from '@mui/mat
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; 
+import 'react-quill/dist/quill.snow.css';
 import Note from '../service/Note';
 import { selectUser } from '../features/selector';
 
 const EditNote: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const user = useSelector(selectUser); 
+    const user = useSelector(selectUser);
 
     const note = location.state?.note;
 
-    const [title, setTitle] = useState<string>(''); 
-    const [content, setContent] = useState<string>(''); 
+    const [title, setTitle] = useState<string>('');
+    const [content, setContent] = useState<string>('');
     const [successMessage, setSuccessMessage] = useState<string>('');
 
     useEffect(() => {
@@ -47,7 +47,10 @@ const EditNote: React.FC = () => {
             console.error('Not güncellenirken bir hata oluştu:', error);
         }
     };
+    const handleBackToUserPage = () => {
+        navigate(`/userPage`, { state: { user: user } }); // Yönlendirme ve state ile veri gönderimi
 
+    }
     return (
         <Container maxWidth="md" style={{ marginTop: '20px' }}>
             <form onSubmit={handleSubmit}>
@@ -93,6 +96,9 @@ const EditNote: React.FC = () => {
                 </Grid2>
             </form>
             {successMessage && <Typography color="green" style={{ marginTop: '10px' }}>{successMessage}</Typography>}
+            <Grid2 sx={{ marginTop: '10px' }}>
+                <Button variant='contained' onClick={handleBackToUserPage}>geri dön </Button>
+            </Grid2>
         </Container>
     );
 };
